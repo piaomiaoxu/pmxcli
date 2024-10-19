@@ -11,7 +11,9 @@
 ### 方式一
 只需要在支持安装Docker的Linux环境中使用下面的指令即可完成安装
 
-`bash <(curl -sL https://raw.githubusercontent.com/piaomiaoxu/pmxcli/refs/heads/main/installation.sh)`
+```
+bash <(curl -sL https://raw.githubusercontent.com/piaomiaoxu/pmxcli/refs/heads/main/installation.sh)
+```
 
 ### 方式二
 下载上面的 docker-compose.yaml 并在同路径使用 `docker compose up -d` 启动
