@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  pmx_sub:
+    container_name: pmx_sub
+    image: piaomiaoxu/pmx_sub:v2
+    restart: always
+    volumes:
+      - yaoyue:/root/.config/mihomo/
+      - ./user.yaml:/root/.config/yaoyue/user.yaml
+    network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  metacubexd:
+    container_name: metacubexd
+    image: ghcr.io/metacubex/metacubexd
+    depends_on:
+      - mihomo
+    restart: always
+    ports:
+      - '8081:80'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mihomo:
+    container_name: mihomo
+    image: piaomiaoxu/mihomo:v1
+    depends_on:
+      - pmx_sub
+    restart: always
+    pid: host
+    ipc: host
+    network_mode: host
+    cap_add:
+      - ALL
+    volumes:
+      - yaoyue:/root/.config/mihomo/
+      - /dev/net/tun:/dev/net/tun
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        
+volumes:
+  yaoyue:
